@@ -22,11 +22,12 @@ public class AccountDAO {
           ps.setString(1,account.getUsername());
 
           ResultSet rs = ps.executeQuery();
-          pkeyResultSet = ps.getGeneratedKeys();
 
-          if (rs.wasNull() != true) {
-            int generated_account_id = (int) pkeyResultSet.getLong(1);
-            return new Account(generated_account_id, account.getUsername(), account.getPassword());
+          if (rs.next()) {
+            Integer account_id = rs.getInt("account_id");
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+            return new Account(account_id, username, password); 
           }
 
           sql = "INSERT INTO account (username, password) VALUES (?,?)";
@@ -36,6 +37,7 @@ public class AccountDAO {
           ps.setString(2, account.getPassword());
 
           ps.executeUpdate();
+          pkeyResultSet = ps.getGeneratedKeys();
           
           if(!pkeyResultSet.next()) {
             int generated_account_id = (int) pkeyResultSet.getLong(1);
@@ -50,4 +52,32 @@ public class AccountDAO {
 
   }
 
+  public Account loginAccount(Account account) {
+
+    String sql = "SELECT * FROM account WHERE username = ?";
+    Connection connection = ConnectionUtil.getConnection();
+    PreparedStatement ps;
+    ResultSet rs;
+
+    try {
+
+      ps = connection.prepareStatement(sql);
+      ps.setString(1,account.getUsername());
+
+      rs = ps.executeQuery(sql);
+
+      if (rs.next()) {
+        Integer account_id = rs.getInt("account_id");
+        String username = rs.getString("username");
+        String password = rs.getString("password");
+        return new Account(account_id, username, password); 
+      }
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+
+    return null;
+  }
+ 
 }
