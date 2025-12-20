@@ -53,6 +53,8 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(ctx.body(), Account.class);
         Account addedAccount = accountService.addAccount(account);
+        System.out.print(addedAccount);
+
         if (addedAccount != null) {
             ctx.json(mapper.writeValueAsString(addedAccount)).status(200);
             
