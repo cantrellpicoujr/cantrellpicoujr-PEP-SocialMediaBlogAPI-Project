@@ -13,17 +13,20 @@ public class AccountDAO {
       Connection connection = ConnectionUtil.getConnection();
       PreparedStatement ps;
       String sql;
+      ResultSet pkeyResultSet;
 
       try {
 
           sql = "SELECT * FROM account WHERE username = ?";
-          ps = connection.prepareStatement(sql);
+          ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
           ps.setString(1,account.getUsername());
 
           ResultSet rs = ps.executeQuery();
+          pkeyResultSet = ps.getGeneratedKeys();
 
           if (rs.wasNull() != true) {
-            return null;
+            int generated_account_id = (int) pkeyResultSet.getLong(1);
+            return new Account(generated_account_id, account.getUsername(), account.getPassword());
           }
 
           sql = "INSERT INTO account (username, password) VALUES (?,?)";
@@ -33,8 +36,6 @@ public class AccountDAO {
           ps.setString(2, account.getPassword());
 
           ps.executeUpdate();
-
-          ResultSet pkeyResultSet = ps.getGeneratedKeys();
           
           if(!pkeyResultSet.next()) {
             int generated_account_id = (int) pkeyResultSet.getLong(1);
