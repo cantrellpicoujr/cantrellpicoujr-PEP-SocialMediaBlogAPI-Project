@@ -36,7 +36,7 @@ public class MessageDAO {
 
       if (pkeyResultSet.next()) {
         int generated_account_id = (int) pkeyResultSet.getLong(1);
-        return new Message(generated_account_id, message.getMessage_text(), message.getTime_posted_epoch());
+        return new Message(generated_account_id, message.getPosted_by(),message.getMessage_text(), message.getTime_posted_epoch());
       }
 
     } catch(SQLException e) {
