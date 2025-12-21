@@ -24,10 +24,7 @@ public class AccountDAO {
           ResultSet rs = ps.executeQuery();
 
           if (rs.next()) {
-            Integer account_id = rs.getInt("account_id");
-            String username = rs.getString("username");
-            String password = rs.getString("password");
-            return new Account(account_id, username, password); 
+            return null; 
           }
 
           sql = "INSERT INTO account (username, password) VALUES (?,?)";
@@ -72,7 +69,6 @@ public class AccountDAO {
         String password = rs.getString("password");
         return new Account(account_id, username, password); 
       }
-
 
     } catch (SQLException e) {
       System.out.println(e.getMessage());
