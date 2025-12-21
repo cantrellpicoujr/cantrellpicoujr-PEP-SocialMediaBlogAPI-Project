@@ -18,7 +18,7 @@ public class AccountDAO {
       try {
 
           sql = "SELECT * FROM account WHERE username = ?";
-          ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+          ps = connection.prepareStatement(sql);
           ps.setString(1,account.getUsername());
 
           ResultSet rs = ps.executeQuery();
