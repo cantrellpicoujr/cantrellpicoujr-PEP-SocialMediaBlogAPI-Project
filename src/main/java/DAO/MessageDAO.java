@@ -139,7 +139,6 @@ public class MessageDAO {
         Integer deleted = ps.executeUpdate();
 
         if (deleted > 0) {
-          System.out.println("in");
          return message;
         }
       }
