@@ -119,25 +119,25 @@ public class MessageDAO {
     try {
 
       connection = ConnectionUtil.getConnection();
+
       ps = connection.prepareStatement(select);
       ps.setInt(1,id);
 
       ResultSet rs = ps.executeQuery();
 
       if (rs.next()) {
-        ResultSet result = ps.getResultSet();
-        Integer message_id = result.getInt("message_id");
-        Integer posted_by = result.getInt("posted_by");
-        String message_text = result.getString("message_text");
-        Long time_posted_epoch = result.getLong("time_posted_epoch");
+        Integer message_id = rs.getInt("message_id");
+        Integer posted_by = rs.getInt("posted_by");
+        String message_text = rs.getString("message_text");
+        Long time_posted_epoch = rs.getLong("time_posted_epoch");
 
         message = new Message(message_id, posted_by, message_text, time_posted_epoch);
       }
 
-      ps = connection.prepareStatement(select);
+      ps = connection.prepareStatement(delete);
       ps.setInt(1,id);
 
-      Boolean deleted = ps.execute(delete);
+      Boolean deleted = ps.execute();
 
       if (deleted) {
         return message;
