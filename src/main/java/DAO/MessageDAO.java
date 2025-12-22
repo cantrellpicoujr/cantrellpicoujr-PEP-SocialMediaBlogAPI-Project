@@ -136,9 +136,9 @@ public class MessageDAO {
         ps = connection.prepareStatement(delete);
         ps.setInt(1,id);
 
-        Boolean deleted = ps.execute();
+        Integer deleted = ps.executeUpdate();
 
-        if (deleted) {
+        if (deleted > 0) {
           System.out.println("in");
          return message;
         }
