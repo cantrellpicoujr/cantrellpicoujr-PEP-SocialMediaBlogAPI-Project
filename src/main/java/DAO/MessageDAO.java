@@ -140,6 +140,7 @@ public class MessageDAO {
       Boolean deleted = ps.execute();
 
       if (deleted) {
+        System.out.println("in");
         return message;
       }
 

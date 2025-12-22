@@ -122,10 +122,8 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Integer id = Integer.valueOf(ctx.pathParam("id"));
         Message message = messageService.deleteMessageById(id);
-
-        if (message != null) {
-            ctx.json(mapper.writeValueAsString(message)).status(200);
-        }
+            
+    ctx.json(mapper.writeValueAsString(message)).status(200);
     }
 
 
