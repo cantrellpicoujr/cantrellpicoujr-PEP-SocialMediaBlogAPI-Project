@@ -132,18 +132,17 @@ public class MessageDAO {
         Long time_posted_epoch = rs.getLong("time_posted_epoch");
 
         message = new Message(message_id, posted_by, message_text, time_posted_epoch);
+    
+        ps = connection.prepareStatement(delete);
+        ps.setInt(1,id);
+
+        Boolean deleted = ps.execute();
+
+        if (deleted) {
+          System.out.println("in");
+         return message;
+        }
       }
-
-      ps = connection.prepareStatement(delete);
-      ps.setInt(1,id);
-
-      Boolean deleted = ps.execute();
-
-      if (deleted) {
-        System.out.println("in");
-        return message;
-      }
-
     } catch(SQLException e) {
       System.out.println(e.getMessage());
     }
@@ -151,6 +150,5 @@ public class MessageDAO {
     return null;
 
   }
-
   
 }
