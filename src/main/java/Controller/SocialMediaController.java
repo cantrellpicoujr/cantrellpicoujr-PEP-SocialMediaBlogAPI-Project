@@ -133,6 +133,7 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
         Integer id = Integer.valueOf(ctx.pathParam("id"));
+        message.setMessage_id(id);
         Message updatedMessage = messageService.updateMessageById(id, message);
 
         if (updatedMessage != null) {
