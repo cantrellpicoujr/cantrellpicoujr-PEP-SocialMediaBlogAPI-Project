@@ -153,7 +153,7 @@ public class MessageDAO {
   public Message updateMessageById(Integer id, Message message) {
 
     String select = "SELECT * FROM message WHERE message_id = ?";
-    String update = "UPDATE message message_text=? WHERE message_id=?";
+    String update = "UPDATE message SET message_text=? WHERE message_id=?";
     PreparedStatement ps;
     Connection connection = ConnectionUtil.getConnection();
     ResultSet rs;
@@ -168,8 +168,8 @@ public class MessageDAO {
       }
 
       ps = connection.prepareStatement(update);
-      ps.setInt(1, message.getMessage_id());
-      ps.setString(2, message.getMessage_text());
+      ps.setString(1, message.getMessage_text());
+      ps.setInt(2, message.getMessage_id());
 
       Integer rowsAffected = ps.executeUpdate();
 
