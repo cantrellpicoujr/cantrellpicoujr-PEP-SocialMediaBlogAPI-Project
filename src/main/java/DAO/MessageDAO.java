@@ -157,7 +157,7 @@ public class MessageDAO {
     PreparedStatement ps;
     Connection connection = ConnectionUtil.getConnection();
     ResultSet rs;
-
+    
     try {
       ps = connection.prepareStatement(select);
       ps.setInt(1, message.getMessage_id());
