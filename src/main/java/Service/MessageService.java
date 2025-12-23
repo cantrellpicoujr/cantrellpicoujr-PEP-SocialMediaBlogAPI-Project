@@ -36,7 +36,7 @@ public class MessageService {
 
   public Message updateMessageById(Integer id, Message message) {
 
-      if (message.getMessage_text() != null && message.getMessage_text().length() < 255) {
+      if (message.getMessage_text() != "" && message.getMessage_text().length() < 255) {
         return messageDAO.updateMessageById(id, message);
       }
 
