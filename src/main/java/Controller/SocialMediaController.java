@@ -43,6 +43,7 @@ public class SocialMediaController {
         app.get("/messages/{id}", this::getMessageByIdHandler);
         app.delete("/messages/{id}", this::deleteMessageByIdHandler);
         app.patch("/messages/{id}", this::patchMessageByIdHandler);
+        app.get()
 
         return app;
     }
@@ -137,10 +138,9 @@ public class SocialMediaController {
         Message updatedMessage = messageService.updateMessageById(id, message);
 
         if (updatedMessage != null) {
-            
             ctx.json(mapper.writeValueAsString(updatedMessage)).status(200);
         } else {
-            ctx.status(404);
+            ctx.status(400);
         }
 
     }
