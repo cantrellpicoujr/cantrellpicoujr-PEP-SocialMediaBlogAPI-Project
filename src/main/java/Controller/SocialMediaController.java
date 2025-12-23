@@ -43,7 +43,7 @@ public class SocialMediaController {
         app.get("/messages/{id}", this::getMessageByIdHandler);
         app.delete("/messages/{id}", this::deleteMessageByIdHandler);
         app.patch("/messages/{id}", this::patchMessageByIdHandler);
-        app.get()
+        app.get("/accounts/{account_id}/messages", this::getMessageByAccountIdHandler);
 
         return app;
     }
@@ -142,6 +142,15 @@ public class SocialMediaController {
         } else {
             ctx.status(400);
         }
+
+    }
+
+    private void getMessageByAccountIdHandler(Context ctx) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Integer account_id = Integer.valueOf(ctx.pathParam("account_id"));
+        List<Message> list = messageService.getMessageByAccountId(account_id);
+
+        ctx.json(mapper.writeValueAsString(list)).status(200);
 
     }
 
