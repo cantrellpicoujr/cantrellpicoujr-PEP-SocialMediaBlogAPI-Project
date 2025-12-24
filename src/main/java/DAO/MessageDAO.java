@@ -14,13 +14,14 @@ public class MessageDAO {
     PreparedStatement ps;
     Connection connection = ConnectionUtil.getConnection();
     ResultSet pkeyResultSet;
+    ResultSet rs;
 
     try {
 
       ps = connection.prepareStatement(sql);
       ps.setInt(1, message.getPosted_by());
 
-      ResultSet rs = ps.executeQuery();
+       rs = ps.executeQuery();
 
       if (!rs.next()) {
         return null;
@@ -51,12 +52,14 @@ public class MessageDAO {
     String sql = "SELECT * FROM message";
     Connection connection;
     List<Message> list = new ArrayList<>();
+    PreparedStatement ps;
+    ResultSet rs;
 
     try {
 
       connection = ConnectionUtil.getConnection();
-      PreparedStatement ps = connection.prepareStatement(sql);
-      ResultSet rs = ps.executeQuery();
+      ps = connection.prepareStatement(sql);
+      rs = ps.executeQuery();
 
       while (rs.next()) {
         Integer message_id = rs.getInt("message_id");
@@ -205,12 +208,13 @@ public class MessageDAO {
     PreparedStatement ps;
     Connection connection = ConnectionUtil.getConnection();
     String sql = "SELECT * FROM message WHERE posted_by=?";
+    ResultSet rs;
 
     try {
 
       ps = connection.prepareStatement(sql);
       ps.setInt(1,account_id);
-      ResultSet rs = ps.executeQuery();
+      rs = ps.executeQuery();
 
       while (rs.next()) {
         Integer message_id = rs.getInt("message_id");

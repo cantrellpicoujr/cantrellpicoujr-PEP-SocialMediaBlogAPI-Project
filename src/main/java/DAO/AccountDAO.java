@@ -51,12 +51,12 @@ public class AccountDAO {
 
   public Account loginAccount(Account account) {
 
+    String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
     Connection connection = ConnectionUtil.getConnection();
     PreparedStatement ps;
 
     try {
 
-      String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
       ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       ps.setString(1,account.getUsername());
       ps.setString(2,account.getPassword());
